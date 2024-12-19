@@ -14,7 +14,7 @@ namespace Jellyfin.Server.Implementations.ModelConfiguration
         {
             builder
                 .Property(user => user.Username)
-                .UseCollation("NOCASE");
+                .UseCollation("utf8mb4_unicode_ci");
 
             builder
                 .HasOne(u => u.ProfileImage)

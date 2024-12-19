@@ -12,63 +12,63 @@ namespace Jellyfin.Server.Implementations.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_ImageInfos_Users_UserId",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "ImageInfos");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Permissions_Users_Permission_Permissions_Guid",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Permissions");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Preferences_Users_Preference_Preferences_Guid",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Preferences");
 
             migrationBuilder.DropIndex(
                 name: "IX_Preferences_Preference_Preferences_Guid",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Preferences");
 
             migrationBuilder.DropIndex(
                 name: "IX_Permissions_Permission_Permissions_Guid",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Permissions");
 
             migrationBuilder.DropIndex(
                 name: "IX_DisplayPreferences_UserId",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "DisplayPreferences");
 
             migrationBuilder.DropIndex(
                 name: "IX_CustomItemDisplayPreferences_UserId",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "CustomItemDisplayPreferences");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Username",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Users",
-                type: "TEXT",
+                type: "VARCHAR(150)",
                 maxLength: 255,
                 nullable: false,
-                collation: "NOCASE",
+                collation: "utf8mb4_unicode_ci",
                 oldClrType: typeof(string),
-                oldType: "TEXT",
+                oldType: "VARCHAR(150)",
                 oldMaxLength: 255);
 
             migrationBuilder.AddColumn<Guid>(
                 name: "UserId",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Preferences",
-                type: "TEXT",
+                type: "VARCHAR(150)",
                 nullable: true);
 
             migrationBuilder.AddColumn<Guid>(
                 name: "UserId",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Permissions",
-                type: "TEXT",
+                type: "VARCHAR(150)",
                 nullable: true);
 
             migrationBuilder.Sql("UPDATE Preferences SET UserId = Preference_Preferences_Guid");
@@ -76,14 +76,14 @@ namespace Jellyfin.Server.Implementations.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Username",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Users",
                 column: "Username",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Preferences_UserId_Kind",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Preferences",
                 columns: new[] { "UserId", "Kind" },
                 unique: true,
@@ -91,7 +91,7 @@ namespace Jellyfin.Server.Implementations.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Permissions_UserId_Kind",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Permissions",
                 columns: new[] { "UserId", "Kind" },
                 unique: true,
@@ -99,30 +99,30 @@ namespace Jellyfin.Server.Implementations.Migrations
 
             migrationBuilder.AddForeignKey(
                 name: "FK_ImageInfos_Users_UserId",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "ImageInfos",
                 column: "UserId",
-                principalSchema: "jellyfin",
+                // principalSchema: "jellyfin",
                 principalTable: "Users",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Permissions_Users_UserId",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Permissions",
                 column: "UserId",
-                principalSchema: "jellyfin",
+                // principalSchema: "jellyfin",
                 principalTable: "Users",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Preferences_Users_UserId",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Preferences",
                 column: "UserId",
-                principalSchema: "jellyfin",
+                // principalSchema: "jellyfin",
                 principalTable: "Users",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
@@ -132,106 +132,114 @@ namespace Jellyfin.Server.Implementations.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_ImageInfos_Users_UserId",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "ImageInfos");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Permissions_Users_UserId",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Permissions");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Preferences_Users_UserId",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Preferences");
 
             migrationBuilder.DropIndex(
                 name: "IX_Users_Username",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Users");
 
             migrationBuilder.DropIndex(
                 name: "IX_Preferences_UserId_Kind",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Preferences");
 
             migrationBuilder.DropIndex(
                 name: "IX_Permissions_UserId_Kind",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Permissions");
 
             migrationBuilder.DropColumn(
                 name: "UserId",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Preferences");
 
             migrationBuilder.DropColumn(
                 name: "UserId",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Permissions");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Username",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Users",
-                type: "TEXT",
+                type: "VARCHAR(255)",
                 maxLength: 255,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "TEXT",
+                oldType: "VARCHAR(255)",
                 oldMaxLength: 255,
-                oldCollation: "NOCASE");
+                oldCollation: "utf8mb4_unicode_ci");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Preferences_Preference_Preferences_Guid",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Preferences",
                 column: "Preference_Preferences_Guid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Permissions_Permission_Permissions_Guid",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Permissions",
                 column: "Permission_Permissions_Guid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DisplayPreferences_UserId",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "DisplayPreferences",
                 column: "UserId");
+            
+            // migrationBuilder.AddForeignKey(
+            //     name: "FK_DisplayPreferences_Users_UserId",
+            //     table: "DisplayPreferences",
+            //     column: "UserId",
+            //     principalTable: "Users",
+            //     principalColumn: "Id",
+            //     onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.CreateIndex(
                 name: "IX_CustomItemDisplayPreferences_UserId",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "CustomItemDisplayPreferences",
                 column: "UserId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_ImageInfos_Users_UserId",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "ImageInfos",
                 column: "UserId",
-                principalSchema: "jellyfin",
+                // principalSchema: "jellyfin",
                 principalTable: "Users",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Permissions_Users_Permission_Permissions_Guid",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Permissions",
                 column: "Permission_Permissions_Guid",
-                principalSchema: "jellyfin",
+                // principalSchema: "jellyfin",
                 principalTable: "Users",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Preferences_Users_Preference_Preferences_Guid",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Preferences",
                 column: "Preference_Preferences_Guid",
-                principalSchema: "jellyfin",
+                // principalSchema: "jellyfin",
                 principalTable: "Users",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);

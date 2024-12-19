@@ -29,6 +29,8 @@
     <PackageReference Include="AsyncKeyedLock" />
     <PackageReference Include="System.Linq.Async" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
+    <Reference Include="System" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
       <PrivateAssets>all</PrivateAssets>

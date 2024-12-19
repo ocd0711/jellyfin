@@ -3,6 +3,8 @@
 
 using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Jellyfin.Server.Implementations.Migrations
 {
@@ -12,11 +14,11 @@ namespace Jellyfin.Server.Implementations.Migrations
         {
             migrationBuilder.CreateTable(
                 name: "DisplayPreferences",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<Guid>(nullable: false),
                     Client = table.Column<string>(maxLength: 32, nullable: false),
                     ShowSidebar = table.Column<bool>(nullable: false),
@@ -36,7 +38,7 @@ namespace Jellyfin.Server.Implementations.Migrations
                     table.ForeignKey(
                         name: "FK_DisplayPreferences_Users_UserId",
                         column: x => x.UserId,
-                        principalSchema: "jellyfin",
+                        // principalSchema: "jellyfin",
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -44,11 +46,11 @@ namespace Jellyfin.Server.Implementations.Migrations
 
             migrationBuilder.CreateTable(
                 name: "ItemDisplayPreferences",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<Guid>(nullable: false),
                     ItemId = table.Column<Guid>(nullable: false),
                     Client = table.Column<string>(maxLength: 32, nullable: false),
@@ -65,7 +67,7 @@ namespace Jellyfin.Server.Implementations.Migrations
                     table.ForeignKey(
                         name: "FK_ItemDisplayPreferences_Users_UserId",
                         column: x => x.UserId,
-                        principalSchema: "jellyfin",
+                        // principalSchema: "jellyfin",
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -73,11 +75,11 @@ namespace Jellyfin.Server.Implementations.Migrations
 
             migrationBuilder.CreateTable(
                 name: "HomeSection",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     DisplayPreferencesId = table.Column<int>(nullable: false),
                     Order = table.Column<int>(nullable: false),
                     Type = table.Column<int>(nullable: false)
@@ -88,7 +90,7 @@ namespace Jellyfin.Server.Implementations.Migrations
                     table.ForeignKey(
                         name: "FK_HomeSection_DisplayPreferences_DisplayPreferencesId",
                         column: x => x.DisplayPreferencesId,
-                        principalSchema: "jellyfin",
+                        // principalSchema: "jellyfin",
                         principalTable: "DisplayPreferences",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -96,20 +98,20 @@ namespace Jellyfin.Server.Implementations.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_DisplayPreferences_UserId",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "DisplayPreferences",
                 column: "UserId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_HomeSection_DisplayPreferencesId",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "HomeSection",
                 column: "DisplayPreferencesId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ItemDisplayPreferences_UserId",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "ItemDisplayPreferences",
                 column: "UserId");
         }
@@ -117,16 +119,19 @@ namespace Jellyfin.Server.Implementations.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "HomeSection",
-                schema: "jellyfin");
+                name: "HomeSection"
+                // schema: "jellyfin"
+                );
 
             migrationBuilder.DropTable(
-                name: "ItemDisplayPreferences",
-                schema: "jellyfin");
+                name: "ItemDisplayPreferences"
+                // schema: "jellyfin"
+                );
 
             migrationBuilder.DropTable(
-                name: "DisplayPreferences",
-                schema: "jellyfin");
+                name: "DisplayPreferences"
+                // schema: "jellyfin"
+                );
         }
     }
 }

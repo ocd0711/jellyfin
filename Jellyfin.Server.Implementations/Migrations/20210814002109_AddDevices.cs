@@ -2,6 +2,8 @@
 
 using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Jellyfin.Server.Implementations.Migrations
 {
@@ -11,15 +13,15 @@ namespace Jellyfin.Server.Implementations.Migrations
         {
             migrationBuilder.CreateTable(
                 name: "ApiKeys",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    DateCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DateLastActivity = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 64, nullable: false),
-                    AccessToken = table.Column<string>(type: "TEXT", nullable: false)
+                    Id = table.Column<int>(type: "INT", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    DateCreated = table.Column<DateTime>(type: "VARCHAR(150)", nullable: false),
+                    DateLastActivity = table.Column<DateTime>(type: "VARCHAR(150)", nullable: false),
+                    Name = table.Column<string>(type: "VARCHAR(150)", maxLength: 64, nullable: false),
+                    AccessToken = table.Column<string>(type: "VARCHAR(150)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,13 +30,13 @@ namespace Jellyfin.Server.Implementations.Migrations
 
             migrationBuilder.CreateTable(
                 name: "DeviceOptions",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    DeviceId = table.Column<string>(type: "TEXT", nullable: false),
-                    CustomName = table.Column<string>(type: "TEXT", nullable: true)
+                    Id = table.Column<int>(type: "INT", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    DeviceId = table.Column<string>(type: "VARCHAR(150)", nullable: false),
+                    CustomName = table.Column<string>(type: "VARCHAR(150)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -43,21 +45,21 @@ namespace Jellyfin.Server.Implementations.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Devices",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    UserId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    AccessToken = table.Column<string>(type: "TEXT", nullable: false),
-                    AppName = table.Column<string>(type: "TEXT", maxLength: 64, nullable: false),
-                    AppVersion = table.Column<string>(type: "TEXT", maxLength: 32, nullable: false),
-                    DeviceName = table.Column<string>(type: "TEXT", maxLength: 64, nullable: false),
-                    DeviceId = table.Column<string>(type: "TEXT", maxLength: 256, nullable: false),
+                    Id = table.Column<int>(type: "INT", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<Guid>(type: "VARCHAR(150)", nullable: false),
+                    AccessToken = table.Column<string>(type: "VARCHAR(150)", nullable: false),
+                    AppName = table.Column<string>(type: "VARCHAR(64)", maxLength: 64, nullable: false),
+                    AppVersion = table.Column<string>(type: "VARCHAR(32)", maxLength: 32, nullable: false),
+                    DeviceName = table.Column<string>(type: "VARCHAR(64)", maxLength: 64, nullable: false),
+                    DeviceId = table.Column<string>(type: "VARCHAR(256)", maxLength: 256, nullable: false),
                     IsActive = table.Column<bool>(type: "INTEGER", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DateModified = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DateLastActivity = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    DateCreated = table.Column<DateTime>(type: "VARCHAR(150)", nullable: false),
+                    DateModified = table.Column<DateTime>(type: "VARCHAR(150)", nullable: false),
+                    DateLastActivity = table.Column<DateTime>(type: "VARCHAR(150)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -65,7 +67,7 @@ namespace Jellyfin.Server.Implementations.Migrations
                     table.ForeignKey(
                         name: "FK_Devices_Users_UserId",
                         column: x => x.UserId,
-                        principalSchema: "jellyfin",
+                        // principalSchema: "jellyfin",
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -73,39 +75,39 @@ namespace Jellyfin.Server.Implementations.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_ApiKeys_AccessToken",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "ApiKeys",
                 column: "AccessToken",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_DeviceOptions_DeviceId",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "DeviceOptions",
                 column: "DeviceId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Devices_AccessToken_DateLastActivity",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Devices",
                 columns: new[] { "AccessToken", "DateLastActivity" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Devices_DeviceId",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Devices",
                 column: "DeviceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Devices_DeviceId_DateLastActivity",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Devices",
                 columns: new[] { "DeviceId", "DateLastActivity" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Devices_UserId_DeviceId",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Devices",
                 columns: new[] { "UserId", "DeviceId" });
         }
@@ -113,16 +115,19 @@ namespace Jellyfin.Server.Implementations.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ApiKeys",
-                schema: "jellyfin");
+                name: "ApiKeys"
+                // schema: "jellyfin"
+                );
 
             migrationBuilder.DropTable(
-                name: "DeviceOptions",
-                schema: "jellyfin");
+                name: "DeviceOptions"
+                // schema: "jellyfin"
+                );
 
             migrationBuilder.DropTable(
-                name: "Devices",
-                schema: "jellyfin");
+                name: "Devices"
+                // schema: "jellyfin"
+                );
         }
     }
 }

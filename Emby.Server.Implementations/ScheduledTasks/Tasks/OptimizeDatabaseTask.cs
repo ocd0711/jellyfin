@@ -69,7 +69,7 @@ namespace Emby.Server.Implementations.ScheduledTasks.Tasks
         /// <inheritdoc />
         public async Task ExecuteAsync(IProgress<double> progress, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Optimizing and vacuuming jellyfin.db...");
+            _logger.LogInformation("Starting database optimization...");
 
             try
             {
@@ -78,20 +78,48 @@ namespace Emby.Server.Implementations.ScheduledTasks.Tasks
                 {
                     if (context.Database.IsSqlite())
                     {
+                        // SQLite optimization
                         await context.Database.ExecuteSqlRawAsync("PRAGMA optimize", cancellationToken).ConfigureAwait(false);
                         await context.Database.ExecuteSqlRawAsync("VACUUM", cancellationToken).ConfigureAwait(false);
-                        _logger.LogInformation("jellyfin.db optimized successfully!");
+                        _logger.LogInformation("SQLite database optimized successfully!");
+                    }
+                    else if (context.Database.IsMySql())
+                    {
+                        // MySQL optimization: Get table names
+                        var tables = new List<string>();
+                        await using (var command = context.Database.GetDbConnection().CreateCommand())
+                        {
+                            command.CommandText = "SHOW TABLES";
+                            await context.Database.OpenConnectionAsync(cancellationToken).ConfigureAwait(false);
+        
+                            await using (var result = await command.ExecuteReaderAsync(cancellationToken).ConfigureAwait(false))
+                            {
+                                while (await result.ReadAsync(cancellationToken).ConfigureAwait(false))
+                                {
+                                    tables.Add(result.GetString(0));
+                                }
+                            }
+                        }
+
+
+                        foreach (var table in tables)
+                        {
+                            await context.Database.ExecuteSqlInterpolatedAsync($"OPTIMIZE TABLE {table}", cancellationToken).ConfigureAwait(false);
+                            // await context.Database.ExecuteSqlRawAsync("OPTIMIZE TABLE " + table, cancellationToken).ConfigureAwait(false);
+                        }
+                        _logger.LogInformation("MySQL database optimized successfully!");
                     }
                     else
                     {
-                        _logger.LogInformation("This database doesn't support optimization");
+                        _logger.LogInformation("This database type doesn't support optimization commands.");
                     }
                 }
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Error while optimizing jellyfin.db");
+                _logger.LogError(e, "Error while optimizing the database");
             }
+
         }
     }
 }

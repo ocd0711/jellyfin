@@ -3,6 +3,8 @@
 
 using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Jellyfin.Server.Implementations.Migrations
 {
@@ -12,7 +14,7 @@ namespace Jellyfin.Server.Implementations.Migrations
         {
             migrationBuilder.CreateTable(
                 name: "Users",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -52,11 +54,11 @@ namespace Jellyfin.Server.Implementations.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AccessSchedules",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<Guid>(nullable: false),
                     DayOfWeek = table.Column<int>(nullable: false),
                     StartHour = table.Column<double>(nullable: false),
@@ -68,7 +70,7 @@ namespace Jellyfin.Server.Implementations.Migrations
                     table.ForeignKey(
                         name: "FK_AccessSchedules_Users_UserId",
                         column: x => x.UserId,
-                        principalSchema: "jellyfin",
+                        // principalSchema: "jellyfin",
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -76,11 +78,11 @@ namespace Jellyfin.Server.Implementations.Migrations
 
             migrationBuilder.CreateTable(
                 name: "ImageInfos",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<Guid>(nullable: true),
                     Path = table.Column<string>(maxLength: 512, nullable: false),
                     LastModified = table.Column<DateTime>(nullable: false)
@@ -91,7 +93,7 @@ namespace Jellyfin.Server.Implementations.Migrations
                     table.ForeignKey(
                         name: "FK_ImageInfos_Users_UserId",
                         column: x => x.UserId,
-                        principalSchema: "jellyfin",
+                        // principalSchema: "jellyfin",
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -99,11 +101,11 @@ namespace Jellyfin.Server.Implementations.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Permissions",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Kind = table.Column<int>(nullable: false),
                     Value = table.Column<bool>(nullable: false),
                     RowVersion = table.Column<uint>(nullable: false),
@@ -115,7 +117,7 @@ namespace Jellyfin.Server.Implementations.Migrations
                     table.ForeignKey(
                         name: "FK_Permissions_Users_Permission_Permissions_Guid",
                         column: x => x.Permission_Permissions_Guid,
-                        principalSchema: "jellyfin",
+                        // principalSchema: "jellyfin",
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -123,11 +125,11 @@ namespace Jellyfin.Server.Implementations.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Preferences",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Kind = table.Column<int>(nullable: false),
                     Value = table.Column<string>(maxLength: 65535, nullable: false),
                     RowVersion = table.Column<uint>(nullable: false),
@@ -139,7 +141,7 @@ namespace Jellyfin.Server.Implementations.Migrations
                     table.ForeignKey(
                         name: "FK_Preferences_Users_Preference_Preferences_Guid",
                         column: x => x.Preference_Preferences_Guid,
-                        principalSchema: "jellyfin",
+                        // principalSchema: "jellyfin",
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -147,26 +149,26 @@ namespace Jellyfin.Server.Implementations.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_AccessSchedules_UserId",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "AccessSchedules",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ImageInfos_UserId",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "ImageInfos",
                 column: "UserId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Permissions_Permission_Permissions_Guid",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Permissions",
                 column: "Permission_Permissions_Guid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Preferences_Preference_Preferences_Guid",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Preferences",
                 column: "Preference_Preferences_Guid");
         }
@@ -174,24 +176,29 @@ namespace Jellyfin.Server.Implementations.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AccessSchedules",
-                schema: "jellyfin");
+                name: "AccessSchedules"
+                // schema: "jellyfin"
+                );
 
             migrationBuilder.DropTable(
-                name: "ImageInfos",
-                schema: "jellyfin");
+                name: "ImageInfos"
+                // schema: "jellyfin"
+                );
 
             migrationBuilder.DropTable(
-                name: "Permissions",
-                schema: "jellyfin");
+                name: "Permissions"
+                // schema: "jellyfin"
+                );
 
             migrationBuilder.DropTable(
-                name: "Preferences",
-                schema: "jellyfin");
+                name: "Preferences"
+                // schema: "jellyfin"
+                );
 
             migrationBuilder.DropTable(
-                name: "Users",
-                schema: "jellyfin");
+                name: "Users"
+                // schema: "jellyfin"
+                );
         }
     }
 }

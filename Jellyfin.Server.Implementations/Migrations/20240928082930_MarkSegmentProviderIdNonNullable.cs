@@ -13,11 +13,11 @@ namespace Jellyfin.Server.Implementations.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "SegmentProviderId",
                 table: "MediaSegments",
-                type: "TEXT",
+                type: "VARCHAR(150)",
                 nullable: false,
                 defaultValue: string.Empty,
                 oldClrType: typeof(string),
-                oldType: "TEXT",
+                oldType: "VARCHAR(150)",
                 oldNullable: true);
         }
 
@@ -27,10 +27,10 @@ namespace Jellyfin.Server.Implementations.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "SegmentProviderId",
                 table: "MediaSegments",
-                type: "TEXT",
+                type: "VARCHAR(150)",
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "TEXT");
+                oldType: "VARCHAR(150)");
         }
     }
 }

@@ -15,12 +15,12 @@ namespace Jellyfin.Server.Implementations.Migrations
                 name: "MediaSegments",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ItemId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Id = table.Column<Guid>(type: "VARCHAR(150)", nullable: false),
+                    ItemId = table.Column<Guid>(type: "VARCHAR(150)", nullable: false),
                     Type = table.Column<int>(type: "INTEGER", nullable: false),
                     EndTicks = table.Column<long>(type: "INTEGER", nullable: false),
                     StartTicks = table.Column<long>(type: "INTEGER", nullable: false),
-                    SegmentProviderId = table.Column<string>(type: "TEXT", nullable: false),
+                    SegmentProviderId = table.Column<string>(type: "VARCHAR(150)", nullable: false),
                 },
                 constraints: table =>
                 {

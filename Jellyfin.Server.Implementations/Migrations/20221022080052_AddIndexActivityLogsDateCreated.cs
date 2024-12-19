@@ -12,7 +12,7 @@ namespace Jellyfin.Server.Implementations.Migrations
         {
             migrationBuilder.CreateIndex(
                 name: "IX_ActivityLogs_DateCreated",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "ActivityLogs",
                 column: "DateCreated");
         }
@@ -21,7 +21,7 @@ namespace Jellyfin.Server.Implementations.Migrations
         {
             migrationBuilder.DropIndex(
                 name: "IX_ActivityLogs_DateCreated",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "ActivityLogs");
         }
     }

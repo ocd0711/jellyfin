@@ -3,6 +3,8 @@
 
 using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Jellyfin.Server.Implementations.Migrations
 {
@@ -15,11 +17,11 @@ namespace Jellyfin.Server.Implementations.Migrations
 
             migrationBuilder.CreateTable(
                 name: "ActivityLogs",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(maxLength: 512, nullable: false),
                     Overview = table.Column<string>(maxLength: 512, nullable: true),
                     ShortOverview = table.Column<string>(maxLength: 512, nullable: true),
@@ -39,8 +41,9 @@ namespace Jellyfin.Server.Implementations.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ActivityLogs",
-                schema: "jellyfin");
+                name: "ActivityLogs"
+                // schema: "jellyfin"
+                );
         }
     }
 }

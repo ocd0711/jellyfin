@@ -11,7 +11,7 @@ namespace Jellyfin.Server.Implementations.Migrations
         {
             migrationBuilder.AddColumn<int>(
                 name: "MaxActiveSessions",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Users",
                 nullable: false,
                 defaultValue: 0);
@@ -21,7 +21,7 @@ namespace Jellyfin.Server.Implementations.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "MaxActiveSessions",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "Users");
         }
     }

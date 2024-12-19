@@ -13,7 +13,7 @@ namespace Jellyfin.Server.Implementations.Migrations
             migrationBuilder.AddColumn<string>(
                 name: "CastReceiverId",
                 table: "Users",
-                type: "TEXT",
+                type: "VARCHAR(32)",
                 maxLength: 32,
                 nullable: true);
         }

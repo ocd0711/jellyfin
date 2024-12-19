@@ -15,7 +15,7 @@ namespace Jellyfin.Server.Implementations.Migrations
                 name: "TrickplayInfos",
                 columns: table => new
                 {
-                    ItemId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    ItemId = table.Column<Guid>(type: "VARCHAR(150)", nullable: false),
                     Width = table.Column<int>(type: "INTEGER", nullable: false),
                     Height = table.Column<int>(type: "INTEGER", nullable: false),
                     TileWidth = table.Column<int>(type: "INTEGER", nullable: false),

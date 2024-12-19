@@ -10,25 +10,25 @@ namespace Jellyfin.Server.Implementations.Migrations
         {
             migrationBuilder.AlterColumn<string>(
                 name: "Value",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "CustomItemDisplayPreferences",
-                type: "TEXT",
+                type: "VARCHAR(150)",
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "TEXT");
+                oldType: "VARCHAR(150)");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
                 name: "Value",
-                schema: "jellyfin",
+                // schema: "jellyfin",
                 table: "CustomItemDisplayPreferences",
-                type: "TEXT",
+                type: "VARCHAR(150)",
                 nullable: false,
                 defaultValue: "",
                 oldClrType: typeof(string),
-                oldType: "TEXT",
+                oldType: "VARCHAR(150)",
                 oldNullable: true);
         }
     }

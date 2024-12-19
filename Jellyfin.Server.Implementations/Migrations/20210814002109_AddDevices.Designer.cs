@@ -547,7 +547,7 @@ namespace Jellyfin.Server.Implementations.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("TEXT")
-                        .UseCollation("NOCASE");
+                        .UseCollation("utf8mb4_unicode_ci");
 
                     b.HasKey("Id");
 
